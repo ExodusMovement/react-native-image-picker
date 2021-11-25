@@ -366,11 +366,11 @@ RCT_EXPORT_METHOD(showImagePicker:(NSDictionary *)options callback:(RCTResponseS
             NSString *mimeType;
             if ([[self.options objectForKey:@"imageFileType"] isEqualToString:@"png"]) {
                 data = UIImagePNGRepresentation(editedImage);
-                mimeType = @"image/png"
+                mimeType = @"image/png";
             }
             else {
                 data = UIImageJPEGRepresentation(editedImage, [[self.options valueForKey:@"quality"] floatValue]);
-                mimeType = @"image/jpeg"
+                mimeType = @"image/jpeg";
             }
             [self.response setObject:mimeType forKey:@"type"];
             [data writeToFile:path atomically:YES];
