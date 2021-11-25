@@ -1,5 +1,5 @@
 {
-  "name": "react-native-image-picker",
+  "name": "@exodus/react-native-image-picker",
   "description": "A React Native module that allows you to use native UI to select media from the device library or directly from the camera",
   "version": "0.28.1",
   "main": "index.js",
