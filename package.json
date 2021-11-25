@@ -1,13 +1,25 @@
 {
-  "name": "react-native-image-picker",
+  "name": "@exodus/react-native-image-picker",
   "description": "A React Native module that allows you to use native UI to select media from the device library or directly from the camera",
-  "version": "0.28.1",
+  "version": "0.28.1-exodus.5",
   "main": "index.js",
   "homepage": "https://github.com/react-community/react-native-image-picker",
   "repository": {
     "type": "git",
     "url": "https://github.com/react-community/react-native-image-picker.git"
   },
+  "files": [
+    "android/src/main/AndroidManifest.xml",
+    "android/src/main/",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "ios/*.h",
+    "ios/*.m",
+    "ios/RNImagePicker.xcodeproj/project.pbxproj",
+    "index.js",
+    "RNImagePicker.xcodeproj",
+    "react-native-image-picker.podspec"
+  ],
   "nativePackage": true,
   "author": "Marc Shilling (marcshilling)",
   "contributors": [

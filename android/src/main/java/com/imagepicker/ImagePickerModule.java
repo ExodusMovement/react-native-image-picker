@@ -339,12 +339,6 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
       MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
     }
 
-    if (libraryIntent.resolveActivity(reactContext.getPackageManager()) == null)
-    {
-      responseHelper.invokeError(callback, "Cannot launch photo library");
-      return;
-    }
-
     try
     {
       currentActivity.startActivityForResult(libraryIntent, requestCode);
@@ -358,12 +352,6 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
 
   @Override
   public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
-    //robustness code
-    if (passResult(requestCode))
-    {
-      return;
-    }
-
     responseHelper.cleanResponse();
 
     // user cancel
@@ -387,7 +375,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
         String realPath = getRealPathFromURI(uri);
         final boolean isUrl = !TextUtils.isEmpty(realPath) &&
                 Patterns.WEB_URL.matcher(realPath).matches();
-        if (realPath == null || isUrl)
+        if (realPath == null || isUrl || Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
         {
           try
           {
@@ -517,14 +505,6 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
     return getCurrentActivity();
   }
 
-
-  private boolean passResult(int requestCode)
-  {
-    return callback == null || (cameraCaptureURI == null && requestCode == REQUEST_LAUNCH_IMAGE_CAPTURE)
-            || (requestCode != REQUEST_LAUNCH_IMAGE_CAPTURE && requestCode != REQUEST_LAUNCH_IMAGE_LIBRARY
-            && requestCode != REQUEST_LAUNCH_VIDEO_LIBRARY && requestCode != REQUEST_LAUNCH_VIDEO_CAPTURE);
-  }
-
   private void updatedResultResponse(@Nullable final Uri uri,
                                      @NonNull final String path)
   {
@@ -542,10 +522,11 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
                                    @NonNull final Callback callback,
                                    @NonNull final int requestCode)
   {
-    final int writePermission = ActivityCompat
-            .checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-    final int cameraPermission = ActivityCompat
-            .checkSelfPermission(activity, Manifest.permission.CAMERA);
+    final int writePermission = Build.VERSION.SDK_INT <= Build.VERSION_CODES.P ? ActivityCompat
+            .checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) : PackageManager.PERMISSION_GRANTED;
+    // final int cameraPermission = ActivityCompat
+    //         .checkSelfPermission(activity, Manifest.permission.CAMERA);
+    final int cameraPermission = PackageManager.PERMISSION_GRANTED;
 
     final boolean permissionsGrated = writePermission == PackageManager.PERMISSION_GRANTED &&
             cameraPermission == PackageManager.PERMISSION_GRANTED;
@@ -636,6 +617,20 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
     return RealPathUtil.getRealPathFromURI(reactContext, uri);
   }
 
+  String getFileTypeFromMime(Uri uri) {
+    String mimeType = reactContext.getContentResolver().getType(uri);
+
+    if (mimeType == null) {
+      return "jpg";
+    }
+    switch (mimeType) {
+      case "image/jpeg": return "jpg";
+      case "image/png": return "png";
+      case "image/gif": return "gif";
+    }
+    return "jpg";
+  }
+
   /**
    * Create a file from uri to allow image picking of image in disk cache
    * (Exemple: facebook image, google image etc..)
@@ -648,7 +643,7 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
    * @throws Exception
    */
   private File createFileFromURI(Uri uri) throws Exception {
-    File file = new File(reactContext.getExternalCacheDir(), "photo-" + uri.getLastPathSegment());
+    File file = new File(reactContext.getExternalCacheDir(), "photo-" + uri.getLastPathSegment() + "." + getFileTypeFromMime(uri));
     InputStream input = reactContext.getContentResolver().openInputStream(uri);
     OutputStream output = new FileOutputStream(file);
 
