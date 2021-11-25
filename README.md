@@ -1,3 +1,8 @@
+## @exodus/react-native-image-picker
+
+Image picker support for Android P+ and M1 Macs
+
+
 # React Native Image Picker
 
 [![npm version](https://badge.fury.io/js/react-native-image-picker.svg)](https://badge.fury.io/js/react-native-image-picker)
