@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.license      = package['license']
   s.platform     = :ios, "7.0"
 
-  s.source       = { :git => "https://github.com/marcshilling/react-native-image-picker" }
+  s.source       = { :git => "https://github.com/ExodusMovement/react-native-image-picker" }
   s.source_files  = "ios/*.{h,m}"
 
   s.dependency 'React'
