@@ -1,7 +1,7 @@
 {
   "name": "@exodus/react-native-image-picker",
   "description": "A React Native module that allows you to use native UI to select media from the device library or directly from the camera",
-  "version": "0.28.1-exodus.3",
+  "version": "0.28.1-exodus.4",
   "main": "index.js",
   "homepage": "https://github.com/react-community/react-native-image-picker",
   "repository": {
@@ -17,7 +17,8 @@
     "ios/*.m",
     "ios/RNImagePicker.xcodeproj/project.pbxproj",
     "index.js",
-    "RNImagePicker.xcodeproj"
+    "RNImagePicker.xcodeproj",
+    "react-native-image-picker.podspec"
   ],
   "nativePackage": true,
   "author": "Marc Shilling (marcshilling)",
