@@ -47,6 +47,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.UUID;
 
 import com.facebook.react.modules.core.PermissionListener;
 import com.facebook.react.modules.core.PermissionAwareActivity;
@@ -68,6 +69,8 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
 
   private final ReactApplicationContext reactContext;
   private final int dialogThemeId;
+
+  public static String fileNamePrefix = "exodus_image_picker_temp_";
 
   protected Callback callback;
   private ReadableMap options;
@@ -308,6 +311,8 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
   @ReactMethod
   public void launchImageLibrary(final ReadableMap options, final Callback callback)
   {
+    if (this.callback != null) return;
+
     final Activity currentActivity = getCurrentActivity();
     if (currentActivity == null) {
       responseHelper.invokeError(callback, "can't find current Activity");
@@ -643,7 +648,9 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
    * @throws Exception
    */
   private File createFileFromURI(Uri uri) throws Exception {
-    File file = new File(reactContext.getExternalCacheDir(), "photo-" + uri.getLastPathSegment() + "." + getFileTypeFromMime(uri));
+    String filename = fileNamePrefix  + UUID.randomUUID() + "." + getFileTypeFromMime(uri);
+    File fileDir = reactContext.getCacheDir();
+    File file = new File(fileDir, filename);
     InputStream input = reactContext.getContentResolver().openInputStream(uri);
     OutputStream output = new FileOutputStream(file);
 
