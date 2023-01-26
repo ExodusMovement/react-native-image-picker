@@ -357,6 +357,11 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
 
   @Override
   public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+
+    if (!isValidRequestCode(requestCode)) {
+      return;
+    }
+
     responseHelper.cleanResponse();
 
     // user cancel
@@ -616,6 +621,16 @@ public class ImagePickerModule extends ReactContextBaseJavaModule
   private boolean isCameraAvailable() {
     return reactContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)
       || reactContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+  }
+
+  private boolean isValidRequestCode(int requestCode) {
+    switch (requestCode) {
+      case REQUEST_LAUNCH_IMAGE_CAPTURE:
+      case REQUEST_LAUNCH_IMAGE_LIBRARY:
+      case REQUEST_LAUNCH_VIDEO_LIBRARY:
+      case REQUEST_LAUNCH_VIDEO_CAPTURE: return true;
+      default: return false;
+    }
   }
 
   private @NonNull String getRealPathFromURI(@NonNull final Uri uri) {
