@@ -2,15 +2,15 @@
   "name": "@exodus/react-native-image-picker",
   "version": "8.2.1-exodus-2",
   "description": "A React Native module that allows you to use native UI to select media from the device library or directly from the camera",
-  "react-native": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "lib/typescript/index.d.ts",
+  "react-native": "lib/commonjs/index.js",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
   "files": [
     "/android",
     "!/android/build",
     "/ios",
     "/*.podspec",
-    "/src",
     "/lib"
   ],
   "author": "Johan du Toit (Johan-dutoit)",
@@ -50,13 +50,15 @@
     "source": "src",
     "output": "lib",
     "targets": [
+      "commonjs",
+      "module",
       "typescript"
     ]
   },
   "codegenConfig": {
     "name": "RNImagePickerSpec",
     "type": "modules",
-    "jsSrcsDir": "src",
+    "jsSrcsDir": "lib/commonjs",
     "android": {
       "javaPackageName": "com.imagepicker"
     }
