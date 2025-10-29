@@ -1,4 +1,4 @@
-# react-native-image-picker 🎆
+# @exodus/react-native-image-picker 🎆
 
 A React Native module that allows you to select a photo/video from the device library or camera.
 
@@ -9,7 +9,7 @@ A React Native module that allows you to select a photo/video from the device li
 ## Installation
 
 ```bash
-yarn add react-native-image-picker
+yarn add @exodus/react-native-image-picker
 ```
 
 ### New Architecture
@@ -71,7 +71,10 @@ For more details, consult the Android documentation on AndroidX Photo Picker: [h
 ## Methods
 
 ```js
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {
+  launchCamera,
+  launchImageLibrary,
+} from '@exodus/react-native-image-picker';
 ```
 
 ### `launchCamera()`
@@ -106,58 +109,56 @@ The `callback` will be called with a response object, refer to [The Response Obj
 
 ## Options
 
-| Option                  | iOS | Android | Web | Description                                                                                                                                                                                                                                |
-| ----------------------- | --- | ------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| mediaType               | OK  | OK      | OK  | `photo` or `video` or `mixed`(`launchCamera` on Android does not support 'mixed'). Web only supports 'photo' for now.                                                                                                                      |
-| restrictMimeTypes       | NO  | OK      | NO  | Array containing the mime-types allowed to be picked. Default is empty (everything).                                                                                                                                                       |
-| maxWidth                | OK  | OK      | NO  | To resize the image.                                                                                                                                                                                                                       |
-| maxHeight               | OK  | OK      | NO  | To resize the image.                                                                                                                                                                                                                       |
-| videoQuality            | OK  | OK      | NO  | `low`, `medium`, or `high` on iOS, `low` or `high` on Android.                                                                                                                                                                             |
-| durationLimit           | OK  | OK      | NO  | Video max duration (in seconds).                                                                                                                                                                                                           |
-| quality                 | OK  | OK      | NO  | 0 to 1, photos.                                                                                                                                                                                                                            |
-| conversionQuality       | NO  | OK      | NO  | For conversion from HEIC/HEIF to JPEG, 0 to 1. Default is `0.92`                                                                                                                                                                           |
-| cameraType              | OK  | OK      | NO  | 'back' or 'front' (May not be supported in few android devices).                                                                                                                                                                           |
-| includeBase64           | OK  | OK      | OK  | If `true`, creates base64 string of the image (Avoid using on large image files due to performance).                                                                                                                                       |
-| includeExtra            | OK  | OK      | NO  | If `true`, will include extra data which requires library permissions to be requested (i.e. exif data).                                                                                                                                    |
-| saveToPhotos            | OK  | OK      | NO  | (Boolean) Only for `launchCamera`, saves the image/video file captured to public photo.                                                                                                                                                    |
-| selectionLimit          | OK  | OK      | OK  | Supports providing any integer value. Use `0` to allow any number of files on iOS version >= 14 & Android version >= 13. Default is `1`.                                                                                                   |
-| presentationStyle       | OK  | NO      | NO  | Controls how the picker is presented. `currentContext`, `pageSheet`, `fullScreen`, `formSheet`, `popover`, `overFullScreen`, `overCurrentContext`. Default is `currentContext`.                                                            |
-| formatAsMp4             | OK  | NO      | NO  | Converts the selected video to MP4 (iOS Only).                                                                                                                                                                                             |
-| assetRepresentationMode | OK  | OK      | NO  | A mode that determines which representation to use if an asset contains more than one on iOS or disables HEIC/HEIF to JPEG conversion on Android if set to 'current'. Possible values: 'auto', 'current', 'compatible'. Default is 'auto'. |
+| Option                  | iOS | Android | Description                                                                                                                                                                                                                                |
+| ----------------------- | --- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| mediaType               | OK  | OK      | `photo` or `video` or `mixed`(`launchCamera` on Android does not support 'mixed').                                                                                                                                                         |
+| restrictMimeTypes       | NO  | OK      | Array containing the mime-types allowed to be picked. Default is empty (everything).                                                                                                                                                       |
+| maxWidth                | OK  | OK      | To resize the image.                                                                                                                                                                                                                       |
+| maxHeight               | OK  | OK      | To resize the image.                                                                                                                                                                                                                       |
+| videoQuality            | OK  | OK      | `low`, `medium`, or `high` on iOS, `low` or `high` on Android.                                                                                                                                                                             |
+| durationLimit           | OK  | OK      | Video max duration (in seconds).                                                                                                                                                                                                           |
+| quality                 | OK  | OK      | 0 to 1, photos.                                                                                                                                                                                                                            |
+| conversionQuality       | NO  | OK      | For conversion from HEIC/HEIF to JPEG, 0 to 1. Default is `0.92`                                                                                                                                                                           |
+| cameraType              | OK  | OK      | 'back' or 'front' (May not be supported in few android devices).                                                                                                                                                                           |
+| includeBase64           | OK  | OK      | If `true`, creates base64 string of the image (Avoid using on large image files due to performance).                                                                                                                                       |
+| includeExtra            | OK  | OK      | If `true`, will include extra data which requires library permissions to be requested (i.e. exif data).                                                                                                                                    |
+| saveToPhotos            | OK  | OK      | (Boolean) Only for `launchCamera`, saves the image/video file captured to public photo.                                                                                                                                                    |
+| selectionLimit          | OK  | OK      | Supports providing any integer value. Use `0` to allow any number of files on iOS version >= 14 & Android version >= 13. Default is `1`.                                                                                                   |
+| presentationStyle       | OK  | NO      | Controls how the picker is presented. `currentContext`, `pageSheet`, `fullScreen`, `formSheet`, `popover`, `overFullScreen`, `overCurrentContext`. Default is `currentContext`.                                                            |
+| formatAsMp4             | OK  | NO      | Converts the selected video to MP4 (iOS Only).                                                                                                                                                                                             |
+| assetRepresentationMode | OK  | OK      | A mode that determines which representation to use if an asset contains more than one on iOS or disables HEIC/HEIF to JPEG conversion on Android if set to 'current'. Possible values: 'auto', 'current', 'compatible'. Default is 'auto'. |
 
 |
 
 ## The Response Object
 
-| key          | iOS | Android | Web | Description                                                         |
-| ------------ | --- | ------- | --- | ------------------------------------------------------------------- |
-| didCancel    | OK  | OK      | OK  | `true` if the user cancelled the process                            |
-| errorCode    | OK  | OK      | OK  | Check [ErrorCode](#ErrorCode) for all error codes                   |
-| errorMessage | OK  | OK      | OK  | Description of the error, use it for debug purpose only             |
-| assets       | OK  | OK      | OK  | Array of the selected media, [refer to Asset Object](#Asset-Object) |
+| key          | iOS | Android | Description                                                         |
+| ------------ | --- | ------- | ------------------------------------------------------------------- |
+| didCancel    | OK  | OK      | `true` if the user cancelled the process                            |
+| errorCode    | OK  | OK      | Check [ErrorCode](#ErrorCode) for all error codes                   |
+| errorMessage | OK  | OK      | Description of the error, use it for debug purpose only             |
+| assets       | OK  | OK      | Array of the selected media, [refer to Asset Object](#Asset-Object) |
 
 ## Asset Object
 
-| key          | iOS | Android | Web | Photo/Video | Requires Permissions | Description                                                                                                                                                                                                                                                                    |
-| ------------ | --- | ------- | --- | ----------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| base64       | OK  | OK      | OK  | PHOTO ONLY  | NO                   | The base64 string of the image (photos only)                                                                                                                                                                                                                                   |
-| uri          | OK  | OK      | OK  | BOTH        | NO                   | The file uri in app specific cache storage. Except when picking **video from Android gallery** where you will get read only content uri, to get file uri in this case copy the file to app specific storage using any react-native library. For web it uses the base64 as uri. |
-| originalPath | NO  | OK      | NO  | BOTH        | NO                   | The original file path.                                                                                                                                                                                                                                                        |
-| width        | OK  | OK      | OK  | BOTH        | NO                   | Asset dimensions                                                                                                                                                                                                                                                               |
-| height       | OK  | OK      | OK  | BOTH        | NO                   | Asset dimensions                                                                                                                                                                                                                                                               |
-| fileSize     | OK  | OK      | NO  | BOTH        | NO                   | The file size                                                                                                                                                                                                                                                                  |
-| type         | OK  | OK      | NO  | BOTH        | NO                   | The file type                                                                                                                                                                                                                                                                  |
-| fileName     | OK  | OK      | NO  | BOTH        | NO                   | The file name                                                                                                                                                                                                                                                                  |
-| duration     | OK  | OK      | NO  | VIDEO ONLY  | NO                   | The selected video duration in seconds                                                                                                                                                                                                                                         |
-| bitrate      | --- | OK      | NO  | VIDEO ONLY  | NO                   | The average bitrate (in bits/sec) of the selected video, if available. (Android only)                                                                                                                                                                                          |
-| timestamp    | OK  | OK      | NO  | BOTH        | YES                  | Timestamp of the asset. Only included if 'includeExtra' is true                                                                                                                                                                                                                |
-| id           | OK  | OK      | NO  | BOTH        | YES                  | local identifier of the photo or video. On Android, this is the same as fileName                                                                                                                                                                                               |
+| key          | iOS | Android | Photo/Video | Requires Permissions | Description                                                                                                                                                                                                                                 |
+| ------------ | --- | ------- | ----------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| base64       | OK  | OK      | PHOTO ONLY  | NO                   | The base64 string of the image (photos only)                                                                                                                                                                                                |
+| uri          | OK  | OK      | BOTH        | NO                   | The file uri in app specific cache storage. Except when picking **video from Android gallery** where you will get read only content uri, to get file uri in this case copy the file to app specific storage using any react-native library. |
+| originalPath | NO  | OK      | BOTH        | NO                   | The original file path.                                                                                                                                                                                                                     |
+| width        | OK  | OK      | BOTH        | NO                   | Asset dimensions                                                                                                                                                                                                                            |
+| height       | OK  | OK      | BOTH        | NO                   | Asset dimensions                                                                                                                                                                                                                            |
+| fileSize     | OK  | OK      | BOTH        | NO                   | The file size                                                                                                                                                                                                                               |
+| type         | OK  | OK      | BOTH        | NO                   | The file type                                                                                                                                                                                                                               |
+| fileName     | OK  | OK      | BOTH        | NO                   | The file name                                                                                                                                                                                                                               |
+| duration     | OK  | OK      | VIDEO ONLY  | NO                   | The selected video duration in seconds                                                                                                                                                                                                      |
+| bitrate      | --- | OK      | VIDEO ONLY  | NO                   | The average bitrate (in bits/sec) of the selected video, if available. (Android only)                                                                                                                                                       |
+| timestamp    | OK  | OK      | BOTH        | YES                  | Timestamp of the asset. Only included if 'includeExtra' is true                                                                                                                                                                             |
+| id           | OK  | OK      | BOTH        | YES                  | local identifier of the photo or video. On Android, this is the same as fileName                                                                                                                                                            |
 
 ## Note on file storage
 
 Image/video captured via camera will be stored in temporary folder allowing it to be deleted any time, so don't expect it to persist. Use `saveToPhotos: true` (default is `false`) to save the file in the public photos. `saveToPhotos` requires `WRITE_EXTERNAL_STORAGE` permission on Android 28 and below (The permission has to obtained by the App manually as the library does not handle that).
-
-For web, this doesn't work.
 
 ## ErrorCode
 
