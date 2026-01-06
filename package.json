@@ -11,6 +11,7 @@
     "!/android/build",
     "/ios",
     "/*.podspec",
+    "/src",
     "/lib"
   ],
   "author": "Johan du Toit (Johan-dutoit)",
@@ -58,7 +59,7 @@
   "codegenConfig": {
     "name": "RNImagePickerSpec",
     "type": "modules",
-    "jsSrcsDir": "lib/commonjs",
+    "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.imagepicker"
     }
